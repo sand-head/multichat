@@ -2,7 +2,7 @@ import { ChatClient } from '@twurple/chat';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Message, { MessageType } from '../components/Message';
 import styles from './[...users].module.scss';
 
@@ -10,6 +10,7 @@ const ChatView: NextPage = () => {
   const router = useRouter();
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [connected, setConnected] = useState<boolean>(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   // get the users from the path and connect to Twitch
   useEffect(() => {
@@ -25,7 +26,7 @@ const ChatView: NextPage = () => {
       chatClient.onJoin((channel) => {
         console.log('joined channel', channel);
       });
-      chatClient.onMessage((channel, user, message, msg) => {
+      chatClient.onMessage((channel, user, _, msg) => {
         const messageWithEmotes = msg
           .parseEmotes()
           .reduce<(string | JSX.Element)[]>((prev, curr) => {
@@ -60,6 +61,9 @@ const ChatView: NextPage = () => {
             content: messageWithEmotes,
           },
         ]);
+
+        // scroll the latest message into view when new ones arrive
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
       });
     };
 
@@ -71,6 +75,7 @@ const ChatView: NextPage = () => {
       {messages.map((m) => (
         <Message key={m.id} message={m} />
       ))}
+      <div ref={bottomRef} />
     </main>
   ) : (
     <main className={styles.feed}>
