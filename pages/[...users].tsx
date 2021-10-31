@@ -7,7 +7,7 @@ const ChatView: NextPage = () => {
   const router = useRouter();
   const [messages, setMessages] = useState<string[]>([]);
   const [connected, setConnected] = useState<boolean>(false);
-  
+
   // get the users from the path and connect to Twitch
   useEffect(() => {
     if (!router.isReady) return;
@@ -23,24 +23,22 @@ const ChatView: NextPage = () => {
         console.log('joined channel', channel);
       });
       chatClient.onMessage((channel, user, message, msg) => {
-        setMessages(m => [...m, message]);
+        setMessages((m) => [...m, message]);
       });
     };
 
     createAndConnectAsync();
   }, [router.isReady, router.query]);
 
-  return connected
-    ? (
-      <main>
-        {messages.map((m, i) => (
-          <div key={i}>{m}</div>
-        ))}
-      </main>
-    )
-    : (
-      <main>Connecting...</main>
-    );
+  return connected ? (
+    <main>
+      {messages.map((m, i) => (
+        <div key={i}>{m}</div>
+      ))}
+    </main>
+  ) : (
+    <main>Connecting...</main>
+  );
 };
 
 export default ChatView;
