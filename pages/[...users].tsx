@@ -1,8 +1,10 @@
 import { ChatClient } from '@twurple/chat';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import Message, { MessageType } from '../components/Message';
+import styles from './[...users].module.scss';
 
 const ChatView: NextPage = () => {
   const router = useRouter();
@@ -24,13 +26,27 @@ const ChatView: NextPage = () => {
         console.log('joined channel', channel);
       });
       chatClient.onMessage((channel, user, message, msg) => {
+        const messageWithEmotes = msg
+          .parseEmotes()
+          .reduce<(string | JSX.Element)[]>((prev, curr) => {
+            if (curr.type == 'text') {
+              prev.push(curr.text);
+            } else if (curr.type == 'emote') {
+              const src = `https://static-cdn.jtvnw.net/emoticons/v2/${curr.id}/default/light/2.0`;
+              prev.push(
+                <Image src={src} alt={curr.name} height={28} width={28} />
+              );
+            }
+            return prev;
+          }, []);
+
         setMessages((m) => [
           ...m,
           {
             id: msg.id,
             userName: user,
             channelName: channel,
-            content: message,
+            content: messageWithEmotes,
           },
         ]);
       });
@@ -40,13 +56,15 @@ const ChatView: NextPage = () => {
   }, [router.isReady, router.query]);
 
   return connected ? (
-    <main>
+    <main className={styles.feed}>
       {messages.map((m) => (
         <Message key={m.id} message={m} />
       ))}
     </main>
   ) : (
-    <main>Connecting...</main>
+    <main className={styles.feed}>
+      <div>Connecting...</div>
+    </main>
   );
 };
 

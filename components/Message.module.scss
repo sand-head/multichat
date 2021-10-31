@@ -1,0 +1,12 @@
+.message {
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+
+  .channelName {
+    padding: 2px 3px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-right: 4px;
+  }
+}
