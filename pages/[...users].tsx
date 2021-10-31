@@ -1,12 +1,13 @@
 import { ChatClient } from '@twurple/chat';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import Message, { MessageType } from '../components/Message';
 import styles from './[...users].module.scss';
 
-const ChatView: NextPage = () => {
+const Chats: NextPage = () => {
   const router = useRouter();
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [connected, setConnected] = useState<boolean>(false);
@@ -70,18 +71,19 @@ const ChatView: NextPage = () => {
     createAndConnectAsync();
   }, [router.isReady, router.query]);
 
-  return connected ? (
+  return (
     <main className={styles.feed}>
-      {messages.map((m) => (
-        <Message key={m.id} message={m} />
-      ))}
+      <Head>
+        <title>chats | multichat</title>
+      </Head>
+      {connected ? (
+        messages.map((m) => <Message key={m.id} message={m} />)
+      ) : (
+        <div>Connecting...</div>
+      )}
       <div ref={bottomRef} />
-    </main>
-  ) : (
-    <main className={styles.feed}>
-      <div>Connecting...</div>
     </main>
   );
 };
 
-export default ChatView;
+export default Chats;
