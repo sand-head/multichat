@@ -32,9 +32,20 @@ const ChatView: NextPage = () => {
             if (curr.type == 'text') {
               prev.push(curr.text);
             } else if (curr.type == 'emote') {
-              const src = `https://static-cdn.jtvnw.net/emoticons/v2/${curr.id}/default/light/2.0`;
+              const emoteSrc = curr.displayInfo.getUrl({
+                size: '2.0',
+                animationSettings: 'default',
+                backgroundType: 'light',
+              });
+
               prev.push(
-                <Image src={src} alt={curr.name} height={28} width={28} />
+                <Image
+                  key={`${curr.id}-${curr.position}`}
+                  src={emoteSrc}
+                  alt={curr.name}
+                  height={28}
+                  width={28}
+                />
               );
             }
             return prev;
