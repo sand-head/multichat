@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import styles from './index.module.scss';
 
 const Home: NextPage = () => {
   return (
-    <main>
+    <main className={styles.page}>
       <Head>
         <title>multichat</title>
       </Head>
