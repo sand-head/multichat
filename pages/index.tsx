@@ -36,8 +36,7 @@ const Home: NextPage<HomeProps> = ({ url }) => {
 Home.getInitialProps = ({ req }) => {
   let url: string;
   if (req?.url) {
-    const uri = new URL(req.url);
-    url = `${uri.protocol}//${uri.hostname}/sand_head/badkittybob/miroit`;
+    url = `https://${req.headers.host}/sand_head/badkittybob/miroit`;
   } else {
     url = `${window.location.protocol}//${window.location.hostname}/sand_head/badkittybob/miroit`;
   }
