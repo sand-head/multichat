@@ -2,10 +2,11 @@ import { ChatClient } from '@twurple/chat';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Message, { MessageType } from '../components/Message';
 
 const ChatView: NextPage = () => {
   const router = useRouter();
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [connected, setConnected] = useState<boolean>(false);
 
   // get the users from the path and connect to Twitch
@@ -23,7 +24,15 @@ const ChatView: NextPage = () => {
         console.log('joined channel', channel);
       });
       chatClient.onMessage((channel, user, message, msg) => {
-        setMessages((m) => [...m, message]);
+        setMessages((m) => [
+          ...m,
+          {
+            id: msg.id,
+            userName: user,
+            channelName: channel,
+            content: message,
+          },
+        ]);
       });
     };
 
@@ -32,8 +41,8 @@ const ChatView: NextPage = () => {
 
   return connected ? (
     <main>
-      {messages.map((m, i) => (
-        <div key={i}>{m}</div>
+      {messages.map((m) => (
+        <Message key={m.id} message={m} />
       ))}
     </main>
   ) : (

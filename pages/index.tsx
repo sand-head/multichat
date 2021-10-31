@@ -9,8 +9,8 @@ const Home: NextPage = () => {
       </Head>
       <h1>multichat</h1>
       <p>
-        howdy! enter Twitch usernames in the URL separated by plus signs to view
-        multiple chats at once!
+        howdy! enter Twitch usernames in the URL separated by forward slashes to
+        view multiple chats at once!
       </p>
     </main>
   );
