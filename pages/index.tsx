@@ -2,9 +2,11 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from './index.module.scss';
 
-const url = `${window.location.protocol}//${window.location.hostname}/sand_head/badkittybob/miroit`;
+interface HomeProps {
+  url: string;
+}
 
-const Home: NextPage = () => {
+const Home: NextPage<HomeProps> = ({ url }) => {
   return (
     <main className={styles.page}>
       <Head>
@@ -29,6 +31,18 @@ const Home: NextPage = () => {
       </p>
     </main>
   );
+};
+
+Home.getInitialProps = ({ req }) => {
+  let url: string;
+  if (req?.url) {
+    const uri = new URL(req.url);
+    url = `${uri.protocol}//${uri.hostname}/sand_head/badkittybob/miroit`;
+  } else {
+    url = `${window.location.protocol}//${window.location.hostname}/sand_head/badkittybob/miroit`;
+  }
+
+  return { url };
 };
 
 export default Home;
