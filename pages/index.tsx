@@ -13,6 +13,15 @@ const Home: NextPage = () => {
         howdy! enter Twitch usernames in the URL separated by forward slashes to
         view multiple chats at once!
       </p>
+      <p>
+        <a
+          href='https://github.com/sand-head/multichat'
+          target='_blank'
+          rel='noreferrer'
+        >
+          GitHub
+        </a>
+      </p>
     </main>
   );
 };
