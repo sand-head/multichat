@@ -59,7 +59,7 @@ const Chats: NextPage = () => {
           ...m,
           {
             id: msg.id,
-            userName: user,
+            userName: msg.userInfo.displayName,
             channelName: channel,
             content: messageWithEmotes,
           },
