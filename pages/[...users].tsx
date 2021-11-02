@@ -41,13 +41,15 @@ const Chats: NextPage = () => {
               });
 
               prev.push(
-                <Image
-                  key={`${curr.id}-${curr.position}`}
-                  src={emoteSrc}
-                  alt={curr.name}
-                  height={28}
-                  width={28}
-                />
+                <div className='emoteWrapper'>
+                  <Image
+                    key={`${curr.id}-${curr.position}`}
+                    src={emoteSrc}
+                    alt={curr.name}
+                    height={28}
+                    width={28}
+                  />
+                </div>
               );
             }
             return prev;

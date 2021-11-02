@@ -16,3 +16,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+// todo: put this in Message.module.scss, somehow
+.emoteWrapper {
+  display: inline;
+
+  > span {
+    vertical-align: middle;
+    margin: -0.5rem 0;
+    position: relative;
+  }
+}

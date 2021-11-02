@@ -14,11 +14,15 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
 
   return (
     <div
-      className={styles.message}
+      className={styles.messageWrapper}
       style={{ backgroundColor: background, color: foreground }}
     >
-      <span className={styles.channelName}>{message.channelName}</span>
-      {message.userName}: {message.content}
+      <div className={styles.message}>
+        <strong className={styles.channelName}>{message.channelName}</strong>
+        <span className={styles.userName}>{message.userName}</span>
+        <span className={styles.separator}>:&nbsp;</span>
+        <span className={styles.content}>{message.content}</span>
+      </div>
     </div>
   );
 };

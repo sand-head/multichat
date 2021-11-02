@@ -1,12 +1,28 @@
-.message {
+.messageWrapper {
   display: flex;
   align-items: center;
-  padding: 4px 6px;
+  padding: 0.5rem 2rem;
 
-  .channelName {
-    padding: 2px 3px;
-    border-radius: 4px;
-    font-weight: bold;
-    margin-right: 4px;
+  * {
+    vertical-align: baseline;
+  }
+
+  .message {
+    display: inline;
+    position: relative;
+
+    .channelName {
+      padding: 2px 3px;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-right: 4px;
+    }
+    .userName {
+      display: inline-block;
+      min-height: 22px;
+    }
+    .content {
+      word-wrap: break-word;
+    }
   }
 }
